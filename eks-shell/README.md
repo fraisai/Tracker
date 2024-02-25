@@ -13,3 +13,5 @@
     a. View all details of the deployed service: view-service-resources
 
 5. Create kubeconfig file: create-kubeconfig.sh
+
+
