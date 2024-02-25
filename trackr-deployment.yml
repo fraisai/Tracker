@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata: 
+  name: trackr-app-deployment
+  namespace: eks-trackr-namespace-app
+  labels:
+    app: eks-trackr-app
+
+spec:
+  replicas: 2 # deploys three replicas (individual Pods) of docker image to cluster
+  selector:
+    matchLabels: 
+      app: eks-trackr-app
+
+  template: 
+    metadata: 
+      labels: 
+        app: eks-trackr-app
+    spec:
+      containers:
+      - name: trackr-app
+        image: DOCKER_IMAGE # fetch docker image from the ECR repo
+        ports: 
+        - name: http
+          containerPort: 8080
+        imagePullPolicy: Always
+
+    strategy:
+      type: RollingUpdate
+      rollingUpdate: # check this
+        maxSurge: 1
+        maxUnavailable: 1

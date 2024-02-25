@@ -1,0 +1,17 @@
+{
+  "name": "trackr",
+  "version": "1.0.0",
+  "description": "Job application tracking tool and dashboard deployed in a Kubernetes cluster on Amazon EKS.",
+  "main": "index.js",
+  "scripts": {
+    "create-cluster": "bash ./kubernetes-cluster/create-cluster.sh",
+    "delete-cluster": "bash ./kubernetes-cluster/delete-cluster.sh",
+    "check-user": "bash ./kubernetes-cluster/check-aws-user.sh",
+    "check-resources": "bash ./kubernetes-cluster/view-namespace-resources.sh",
+    "apply-deployment": "bash ./kubernetes-cluster/apply-deployment.sh",
+    "apply-service": "bash ./kubernetes-cluster/apply-service.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "F. Raisa Iftekher",
+  "license": "ISC"
+}
