@@ -20,10 +20,10 @@ spec:
     spec:
       containers:
       - name: trackr-app
-        image: 'public.ecr.aws/s9u7u6x1/sample_app_001:no-db', # fetch docker image from the ECR repo
+        image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/trackr-eks, # fetch docker image from the ECR repo
         ports: 
         - name: http
-          containerPort: 8080
+          containerPort: 8000
         imagePullPolicy: Always
 
     strategy:

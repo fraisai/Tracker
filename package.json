@@ -14,7 +14,9 @@
     "check-resources": "bash ./kubernetes-cluster/view-namespace-resources.sh",
     "apply-deployment": "bash ./kubernetes-cluster/apply-deployment.sh",
     "apply-service": "bash ./kubernetes-cluster/apply-service.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "node-kill": "sudo killall -9 node",
+    "url-ui": "kubectl get svc ui"
   },
   "author": "F. Raisa Iftekher",
   "license": "ISC",

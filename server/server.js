@@ -4,17 +4,20 @@ const logger = require('morgan');
 const app = express();
 // const cors = require('cors');
 
-const PORT = process.env.PORT || '8080';
+const PORT = process.env.PORT || '8000';
 // HEALTH CHECK
+app.use('/', express.static(path.join(__dirname, '../dist')));
+
 app.get('/health', (req, res) => res.status(200).json("Health Check Passed"));
-// LOGGERS
+
+// LOGGER
 app.use(logger(':date[clf] :method :url :status :response-time ms - :res[content-length]'));
+
 // MIDDLEWARE
 // app.use(cors({credentials: true}));
 app.use(express.json()); // express's built in body-parser - parse JSON bodies, this gives ability to "read" incoming req.body/JSON object
 app.use(express.urlencoded({ extended: true }));
-app.use('/', express.static(path.join(__dirname, '../dist')));
-app.use((req, res, next) => { console.log(req.body); next(); });
+// app.use((req, res, next) => { console.log(req.body); next(); });
 
 app.get('/v1/check', (req, res) => {
     res.status(200).json("Yay! It's working");
@@ -38,6 +41,7 @@ app.use(function(req, res, next) {
     console.error(err);
     res.status(err.status || 500).send(res.locals.message);
   });
+
 
 
 
