@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #080713;
+    background-color: rgb(255, 255, 255);
+}
+
+body {
+    padding-top: 10px;
+}
+
+.main-container {
+    display: flex;
+    padding: 55px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.button {
+    padding: 4px;
+    background-color: greenyellow;
+}

@@ -15,3 +15,5 @@
 5. Create kubeconfig file: create-kubeconfig.sh
 
 
+
+https://stackoverflow.com/questions/68435485/is-it-possible-to-use-github-secrets-inside-my-shell-file

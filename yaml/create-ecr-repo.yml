@@ -1,0 +1,33 @@
+name: ECR Repo
+
+on:
+  push:
+    branches: [create-new-ecr-repo]
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ACC_ID: ${{ secrets.AWS_ACC_ID }}
+jobs:
+  create_ecr_repo:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get directory
+        run: ls -a
+
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # context is correct - problem is a github actions glitch - see: https://github.com/github/vscode-github-actions/issues/222
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: ECR login
+        shell: bash
+        run: |
+          bash aws ecr get-login-password --region ${{ env.AWS_REGION }}| docker login --username AWS --password-stdin https://${{ env.AWS_ACC_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+          bash aws ecr create-repository --repository-name trackr --region ${{ env.AWS_REGION }}
+# eks-shell/aws-credentials.sh
+
+# aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin https://403188442647.dkr.ecr.us-east-1.amazonaws.com
