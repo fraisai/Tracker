@@ -1,0 +1,38 @@
+version: '1'
+services:
+  ui:
+    ports:
+      - 3000:8000
+    environment:
+      - ENDPOINTS_USERS=http://users:3000
+      - ENDPOINTS_LISTINGS=http://listings:3000
+      - ENDPOINTS_ASSETS=http://status:3000
+    hostname: ui
+    image: <ECR repo for UI image>
+    restart: always
+    mem_limit: 512m
+    cap_drop:
+      - ALL
+    
+
+    users:
+      hostname: users
+      image: public.ecr.aws/aws-containers/retail-store-sample-catalog:0.7.0
+      restart: always
+      environment:
+        - GIN_MODE=release
+        - DB_PASSWORD=${_PASSWORD}
+      mem_limit: 128m
+      cap_drop:
+        - ALL
+    users-db:
+      image: mongodb+srv://<user>:<password>@<cluster>/todo?retryWrites=true&w=majority
+      hostname: users-db
+      restart: always
+      environment:
+        # - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+        # - MYSQL_ALLOW_EMPTY_PASSWORD=true
+        # - MYSQL_DATABASE=sampledb
+        # - MYSQL_USER=catalog_user
+        # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      mem_limit: 128m
