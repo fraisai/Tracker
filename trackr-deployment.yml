@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata: 
   name: trackr-app-deployment
-  namespace: eks-trackr-namespace-app
+  namespace: trackr-namespace
   labels:
     app: eks-trackr-app
 

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata: 
   name: eks-trackr-service
-  namespace: eks-trackr-namespace-app
+  namespace: trackr-namespace
   labels:
     app: eks-trackr-app
   spec:
