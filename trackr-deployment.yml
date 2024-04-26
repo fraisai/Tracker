@@ -8,7 +8,7 @@ metadata:
     app: eks-trackr-app
 
 spec:
-  replicas: 2 # deploys three replicas (individual Pods) of docker image to cluster
+  replicas: 2 # deploys 2 replicas (individual Pods) of docker image to cluster
   selector:
     matchLabels: 
       app: eks-trackr-app
