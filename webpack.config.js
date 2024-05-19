@@ -8,7 +8,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        assetModuleFilename: 'assets/[name][ext]'
     },
     devtool: 'eval-source-map',
     mode: 'development',
@@ -47,6 +48,11 @@ module.exports = {
             exclude: /node_modules/,
             use: ['style-loader', 'css-loader'],        
           },
+          {
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            exclude: /node_modules/,
+            type: 'asset/resource',
+        },
         ],
     },
 

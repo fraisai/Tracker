@@ -10,6 +10,6 @@ metadata:
       app: eks-trackr-app
     ports:
       - port: 8000
-        targetPort: 8000
+        targetPort: 8000 # port the container accepts traffic on
     
     type: LoadBalancer

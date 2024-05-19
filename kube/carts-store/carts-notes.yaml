@@ -1,16 +1,11 @@
-# UI PORT = 8080
-
-# UI SERVICE
+# CARTS PORT 8082:8080
+# SERVICE
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ui.fullname" . }}
+  name: {{ include "carts.fullname" . }}
   labels:
-    {{- include "ui.labels" . | nindent 4 }}
-  {{- with .Values.service.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- include "carts.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -19,15 +14,16 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "ui.selectorLabels" . | nindent 4 }}
+    {{- include "carts.selectorLabels" . | nindent 4 }}
 
-# UI DEPLOYMENT
+
+# DEPLOYMENT
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ui.fullname" . }}
+  name: {{ include "carts.fullname" . }}
   labels:
-    {{- include "ui.labels" . | nindent 4 }}
+    {{- include "carts.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -38,24 +34,24 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      {{- include "ui.selectorLabels" . | nindent 6 }}
+      {{- include "carts.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- if or .Values.podAnnotations .Values.metrics.enabled }}
       annotations:
-        {{- include "ui.podAnnotations" . | nindent 8 }}
+        {{- include "carts.podAnnotations" . | nindent 8 }}
         {{- if and .Values.opentelemetry.enabled .Values.opentelemetry.instrumentation }}
         instrumentation.opentelemetry.io/inject-sdk: {{ .Values.opentelemetry.instrumentation }}
         {{- end }}
       {{- end }}
       labels:
-        {{- include "ui.selectorLabels" . | nindent 8 }}
+        {{- include "carts.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "ui.serviceAccountName" . }}
+      serviceAccountName: {{ include "carts.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -65,7 +61,7 @@ spec:
               value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
           envFrom:
             - configMapRef:
-                name: {{ include "ui.configMapName" . }}
+                name: {{ include "carts.configMapName" . }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -103,29 +99,83 @@ spec:
       {{- end }}
 
 
-# UI DOCKER COMPOSE
-version: '2'
+# CARTS DOCKER COMPOSE
+version: '2.3'
 services:
-  ui:
-    ports:
-    - 8080
-    environment:
-      - JAVA_OPTS=-XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
-      - SERVER_TOMCAT_ACCESSLOG_ENABLED=true
-    hostname: ui
+  carts:
     build:
       context: .
       dockerfile: ../../images/java17/Dockerfile
       args:
-        JAR_PATH: target/ui-0.0.1-SNAPSHOT.jar
-    image: microservices-demo/ui
+        JAR_PATH: target/carts-0.0.1-SNAPSHOT.jar
+    image: microservices-demo/carts
+    hostname: carts
     restart: always
-    mem_limit: 256m
     cap_drop:
-      - ALL
+      - all
+    cap_add:
+      - NET_BIND_SERVICE
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid
+    environment:
+      - SERVER_TOMCAT_ACCESSLOG_ENABLED=true
+      - SPRING_PROFILES_ACTIVE=dynamodb
+      - CARTS_DYNAMODB_ENDPOINT=http://carts-db:8000
+      - CARTS_DYNAMODB_CREATETABLE=true
+      - AWS_ACCESS_KEY_ID=key
+      - AWS_SECRET_ACCESS_KEY=dummy
+    ports:
+      - "8082:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      carts-db:
+        condition: service_healthy
 
-# UI DOCKERILE
+  carts-db:
+    image: amazon/dynamodb-local:1.13.1
+    hostname: carts-db
+    restart: always
+    cap_drop:
+      - all
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/shell/ || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
 
+  waiter:
+    image: busybox:1.33.0
+    restart: 'no'
+    cap_drop:
+      - all
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    command: echo 'Ready'
+    depends_on:
+      carts:
+        condition: service_healthy
+
+
+
+# CARTS DOCKERFILE (SAME AS UI) images/java17/Dockerfile
 # Build Stage
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023 as build-env
 
@@ -193,3 +243,4 @@ COPY --chown=appuser:appuser --from=build-env /app.jar .
 EXPOSE 8080
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+

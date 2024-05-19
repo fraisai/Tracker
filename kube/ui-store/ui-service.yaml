@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ui-service
-  namespace:
+  name: eks-ui-store
+  namespace: ui-namespace
   labels:
-    app: 
+    app: eks-ui-store
   spec:
     selector:
-      app:
+      app: eks-ui-store
     ports:
-      - port: 3000
-        targetPort: 
+      - port: 3000 # Service port = any port other pods use to access the Service
+        targetPort: # port the container accepts traffic on
     type: LoadBalancer

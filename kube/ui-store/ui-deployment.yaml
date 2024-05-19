@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: ui-deployment
+  name: eks-ui-store
   namespace: ui-namespace
   labels:
     app: eks-ui-store
@@ -27,9 +27,3 @@ spec:
           ports:
             - name: http
               containerPort: 3000
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 45
-            periodSeconds: 3

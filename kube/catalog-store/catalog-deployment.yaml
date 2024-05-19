@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: eks-catalog-store
+  namespace: catalog-namespace
+  labels:
+    app: eks-catalog-store
+
+spec:
+  replicas: 2 # number of pods
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: eks-catalog-store
+  template:
+    metadata:
+      labels:
+        app: eks-catalog-store
+    spec:
+      container:
+        - name: catalog-store
+          image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/catalog-store
+          ports:
+            - name: http
+              containerPort: 3000
