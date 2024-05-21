@@ -1,21 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalog-service
-  namespace: catalog-namespace
-  labels:
-    app: eks-catalog-store
+  name: hello
+spec:
+  selector:
+    app: hello
     tier: backend
-  spec:
-    selector:
-      app: eks-catalog-store
-      tier: backend
-    ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: http
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+
 
 # the Service named "catalog-service" routes traffic to Pods that have the labels app=eks-catalog-store and tier=backend
 # the DNS name is "catalog-service" aka value in the "name" field
 
 
+# COMMANDS

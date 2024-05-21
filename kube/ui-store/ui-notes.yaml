@@ -21,6 +21,8 @@ spec:
   selector:
     {{- include "ui.selectorLabels" . | nindent 4 }}
 
+
+
 # UI DEPLOYMENT
 apiVersion: apps/v1
 kind: Deployment

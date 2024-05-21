@@ -2,11 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: eks-ui-store
+  name: eks-ui-deployment
   namespace: ui-namespace
   labels:
-    app: eks-ui-store
-
+    tier: frontend
 spec:
   replicas: 2 # number of pods
   strategy:
@@ -15,11 +14,15 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: eks-ui-store
+      app: eks-catalog-store
+      tier: frontend
+      track: stable
   template:
     metadata:
       labels:
-        app: eks-ui-store
+        app: eks-catalog-store
+        tier: frontend
+        track: stable
     spec:
       container:
         - name: ui-store
