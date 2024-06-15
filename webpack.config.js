@@ -26,7 +26,7 @@ module.exports = {
             'Access-Control=Allow-Origin': '*'
         },
         proxy: [
-            {
+            { // request to /api/endpoint on frontend will reroute to localhost:8001/endpoint (server port)
               context: ['/api'],
               target: 'http://localhost:8001',
               pathRewrite: { '^/api': '' },
