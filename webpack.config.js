@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
-    entry: [ './client/index.js'], // entry point into app
+    entry: [ './src/client/index.js'], // entry point into app
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
@@ -15,7 +15,7 @@ module.exports = {
     mode: 'development',
     devServer: {
         host: '0.0.0.0', // required for docker to work with dev server
-        port: 3000,
+        port: 3001,
         hot: true, // hmr for dev server
         historyApiFallback: true,
         static: {
@@ -58,7 +58,7 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            favicon: path.resolve(__dirname, './client/assets/images/favicon.ico'),
+            favicon: path.resolve(__dirname, './src/client/assets/images/favicon.ico'),
             template: './index.html'
         })
     ]

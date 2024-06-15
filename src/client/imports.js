@@ -1,7 +1,8 @@
 import Header from "./components/Header.jsx";
 export default Header;
 
-// export {
-//     Header,
+import StoreFront from "./containers/StoreFront.jsx";
+export {
+    StoreFront,
 
-// }
+}

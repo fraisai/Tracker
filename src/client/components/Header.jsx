@@ -7,7 +7,7 @@ const Header = () => {
         <div className="flex items-center justify-between mx-auto max-w-6xl px-6 pb-2 pt-4 md:pt-6">
             <a className=" cursor-pointer" href="/">
               <h1 className="flex no-underline">
-                <img height="32" width="32" alt="logo" className="h-8 w-8 mr-1 object-contain" src={logo} /><span className="text-xl font-primary font-bold tracking-tight pt-1">Philoxenia</span>
+                <img height="32" width="32" alt="logo" className="h-8 w-8 mr-1 object-contain" src={logo} /><span className="text-xl font-primary font-bold tracking-tight pt-1">Tracker</span>
               </h1>
             </a>
             
