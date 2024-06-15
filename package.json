@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "start": "node ./server/server.js",
-    "dev": "NODE_ENV=development nodemon ./server/server.js & webpack-dev-server --open --hot",
+    "dev": "NODE_ENV=development nodemon -r esm ./server/server.js & webpack-dev-server --open --hot",
     "docker-dev:hot": "docker-compose -f docker-compose-dev-hot.yml up",
     "create-cluster": "bash ./src/eks-shell/create-cluster.sh",
     "delete-cluster": "bash ./src/eks-shell/delete-cluster.sh",
@@ -25,6 +25,7 @@
     "axios": "^1.6.7",
     "buffer-shims": "^1.0.0",
     "cors": "^2.8.5",
+    "esm": "^3.2.25",
     "pg": "^8.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

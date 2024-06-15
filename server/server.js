@@ -1,9 +1,13 @@
 const express = require('express');
 const path = require('path');
+// import React from 'react'
+const ReactDOMServer = require('react-dom/server');
+
 const logger = require('morgan');
 const app = express();
 const cors = require('cors');
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
+// import productUnicorn from '../src/client/containers/StoreFront';
 
 // HEALTH CHECK
 app.get('/health', (req, res) => res.status(200).json("Health Check Passed"));
@@ -16,8 +20,14 @@ app.use(logger(':date[clf] :method :url :status :response-time ms - :res[content
 app.use(cors({ credentials: true }));
 app.use(express.json()); // express's built in body-parser - parse JSON bodies, this gives ability to "read" incoming req.body/JSON object
 app.use(express.urlencoded({ extended: true }));
-app.use('/', express.static(path.join(__dirname, '../dist')));
 
+
+app.get('/products/the-unicorn', (req, res) => {
+  res.send('products/unicorn');
+  return;
+});
+
+// app.use('/', express.static(path.join(__dirname, '../dist')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

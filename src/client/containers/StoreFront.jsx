@@ -8,7 +8,7 @@ const StoreFront = () => {
 
     <div className="flex flex-row grid grid-cols-3 gap-32 sm:grid-cols-2 lg:grid-cols-3 ">
         <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 gap-x-4 gap-y-8">
-            <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="/products/the-unicorn">
+            <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="/api/products/the-unicorn">
                 <div className="h-72 border-b-2 border-palette-lighter relative">
                     {/* <div style={{}}> */}
                     <div style={{style1}}>
@@ -26,7 +26,7 @@ const StoreFront = () => {
 
 
         <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-        <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="/products/the-unicorn">
+            <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="http://localhost:3000/products/the-unicorn">
                 <div className="h-72 border-b-2 border-palette-lighter relative">
                     <div style={{style1}}>
                         <img alt="test-text" src="https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-6aeffeca.jpg%3Fv%3D1617396810&w=2048&q=75" decoding="async" className="transform duration-500 ease-in-out hover:scale-110" style={{style2}} sizes="100vw" srcSet="" />
@@ -48,4 +48,10 @@ const StoreFront = () => {
   )
 }
 
+export async function getServerSideProps() {
+    const res = await fetch(`${process.env.API_URL}/api/products`)
+    const products = await res.json()
+    return { props: { products } }
+  }
+  
 export default StoreFront

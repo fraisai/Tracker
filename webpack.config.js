@@ -25,13 +25,13 @@ module.exports = {
         headers: {
             'Access-Control=Allow-Origin': '*'
         },
-        proxy:[ 
-            { // proxy needed to make api calls to server while using hmr
-                // https://webpack.js.org/configuration/dev-server/#devserverproxy
-                context: ['/v1'],
-                target: 'http://localhost:8000/' // A request in frontend to /v1/users will now proxy the request to http://localhost:8080/v1/users.
-            }
-        ]
+        proxy: [
+            {
+              context: ['/api'],
+              target: 'http://localhost:8001',
+              pathRewrite: { '^/api': '' },
+            },
+          ],
     },
 
     module: {
