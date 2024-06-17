@@ -7,7 +7,7 @@ metadata:
     type: ingress
 spec:
   rules:
-    - host:
+    - host: tracker-app.com
       http:
         paths:
           - path: /catalog
@@ -24,5 +24,5 @@ spec:
                 name: carts-service
                 port:
                   number: 80
-
+            
   
