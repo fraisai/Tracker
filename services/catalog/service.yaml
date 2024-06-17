@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: catalog
   labels:
-    app: tracker-catalog
-    type: service
+    app: tracker
+    component: catalog
+    type: deploy
     tier: backend
 spec:
   type: ClusterIP
@@ -13,8 +14,8 @@ spec:
     targetPort: http
     protocol: TCP
     name: http
-  selector:
-    name: catalog
+  selector: # fowards requests to pods with labels: microservice=catalog, type=pods, tier=backend
+    microservice: catalog
     type: pods
     tier: backend
 

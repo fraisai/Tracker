@@ -3,21 +3,22 @@ kind: Deployment
 metadata: # labels the actual deployment itself: kubectl delete -l app=tracker-catalog, type=deploy, tier=backend
   name: catalog-deployment
   namespace: catalog_namespace
-  labels:
-    app: tracker-catalog
+  labels: # deployment label: app=tracker, service=catalog, type=deploy, tier=backend
+    app: tracker
+    component: catalog
     type: deploy
     tier: backend
 spec:
   replicas: 2
   selector: # used to tell deployment/service which pods with matching labels to apply to 
     matchLabels:
-      name: catalog
+      microservice: catalog
       type: pods
       tier: backend
   template:
     metadata:
-      labels:
-        name: catalog
+      labels: # Pod labels: name=catalog, type=pods, tie=backend
+        microservice: catalog
         type: pods
         tier: backend
       spec:

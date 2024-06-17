@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: ui
+  labels:
+    app: tracker
+    component: ui
+    type: deploy
+    tier: frontend
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector: # selects pods with labels: microservice=ui, type=pods, tier=frontend
+    matchLabels:
+      microservice: ui
+      type: pods
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        microservice: ui
+        type: pods
+        tier: frontend
+    spec:
+      containers: 
+        - name: ui
+          image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/ui-store
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 
