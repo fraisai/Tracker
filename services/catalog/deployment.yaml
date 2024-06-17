@@ -13,13 +13,13 @@ spec:
     matchLabels:
       name: catalog
       type: pods
-      component: service
+      tier: backend
   template:
     metadata:
       labels:
         name: catalog
         type: pods
-        component: service 
+        tier: backend
       spec:
         serviceAccountName: catalog
         containers:

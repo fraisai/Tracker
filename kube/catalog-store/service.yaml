@@ -16,8 +16,9 @@ spec:
   selector:
     name: catalog
     type: pods
-    component: service
+    tier: backend
 
+    
 # What this service does:
   # 1. Selects catalog Pods using labels that match the Pod labels in the Deployment file
   # 2. exposes itself on port 80
