@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Ingress
+metadata:
+  name: tracker-ingress
+  annotations:
+    name: tracker-ingress
+    type: ingress
+spec:
+  rules:
+    - host:
+      http:
+        paths:
+          - path: /catalog
+            pathType: Prefix
+            backend:
+              service:
+                name: catalog-service
+                port: 
+                  number: 80
+          - path: /carts
+            pathType: Prefix
+            backend:
+              service:
+                name: carts-service
+                port:
+                  number: 80
+
+  

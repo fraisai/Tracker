@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalog
+  name: catalog-service
   labels:
     app: tracker-catalog
     type: service
@@ -13,12 +13,12 @@ spec:
     targetPort: http
     protocol: TCP
     name: http
-  selector:
+  selector: # selects the pods that match the deployment labels
     name: catalog
     type: pods
     tier: backend
 
-    
+
 # What this service does:
   # 1. Selects catalog Pods using labels that match the Pod labels in the Deployment file
   # 2. exposes itself on port 80
