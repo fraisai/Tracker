@@ -31,6 +31,29 @@ spec:
         - name: ui
           image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/ui-store
           imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef: # define the configmap data as container env variables and The key from the ConfigMap becomes the environment variable name in the Pod
+                name: ui-configMap
           ports:
             - name: http
-              containerPort: 
+              containerPort: 8001
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 3
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 128m
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory    
