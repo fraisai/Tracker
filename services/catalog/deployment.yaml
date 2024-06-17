@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Deployment
-metadata: # labels the actual deployment itself: kubectl delete -l app=tracker-catalog, type=deploy, tier=backend
+metadata: # labels the actual deployment itself: kubectl delete -l app=tracker, component=catalog, type=deploy, tier=backend
   name: catalog-deployment
-  namespace: catalog_namespace
+  namespace: catalog-namespace
   labels: # deployment label: app=tracker, service=catalog, type=deploy, tier=backend
     app: tracker
     component: catalog

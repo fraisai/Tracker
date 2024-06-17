@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: carts
+  namespace: carts-namespace
   labels: # service labels: app=tracker, component=carts, type=deploy, tier=backend
     app: tracker
     component: carts

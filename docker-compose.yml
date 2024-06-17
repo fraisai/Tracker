@@ -2,7 +2,7 @@ version: '1'
 services:
   ui:
     ports:
-      - 3000:8000
+      - 3001:8001
     environment:
       - ENDPOINTS_USERS=http://users:3000
       - ENDPOINTS_LISTINGS=http://listings:3000
