@@ -1,12 +1,11 @@
-import React from 'react'
+const React = require('react');
 const style2 = `position: 'absolute', top: 0, left:0,bottom:0,right:0, boxSizing: border-box, padding:0, border:'none', margin:'auto', display:'block', width:0, height:0, minWidth:'100%', maxWidth:'100%', minHeight:'100%', maxHeight:'100%'`;
 const style1 = `display: 'block',  overflow:'hidden', position:'absolute', top:0, left:0, bottom:0, right:0, boxSizing: 'border-box', margin: 0`;
 
 
 const StoreFront = () => {
   return (
-
-    <div className="flex flex-row grid grid-cols-3 gap-32 sm:grid-cols-2 lg:grid-cols-3 ">
+    `<div className="flex flex-row grid grid-cols-3 gap-32 sm:grid-cols-2 lg:grid-cols-3 ">
         <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 gap-x-4 gap-y-8">
             <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="/api/products/the-unicorn">
                 <div className="h-72 border-b-2 border-palette-lighter relative">
@@ -37,15 +36,11 @@ const StoreFront = () => {
                     <div className="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">The Unicorn</div>
                     <div className="text-lg text-gray-600 p-4 font-primary font-light">They exist!</div>
                     <div className="text-palette-dark font-primary font-medium text-base absolute bottom-0 right-0 mb-4 pl-8 pr-4 pb-1 pt-2 bg-palette-lighter  rounded-tl-sm triangle">$<span className="text-lg">9.99</span></div>
-                </div>
-                        
+                </div>  
             </a>    
-
         </div>
-
-        
-    </div>
+    </div>`
   )
 }
 
-export default StoreFront
+// module.exports = renderToString(StoreFront)

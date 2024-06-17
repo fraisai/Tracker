@@ -1,13 +1,18 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
-// import React from 'react'
-const ReactDOMServer = require('react-dom/server');
+// const ReactDOMServer = require('react-dom/server');
+const React = require('react')
+import App from "../src/client/App.jsx";
+
+const { renderToString } = require('react-dom/server');
+const StoreFront = require('../src/client/containers/StoreFront.cjs').default;
+const ProductPageContainer = require('../src/client/containers/ProductPageContainer.cjs').default;
 
 const logger = require('morgan');
 const app = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 8001;
-// import productUnicorn from '../src/client/containers/StoreFront';
 
 // HEALTH CHECK
 app.get('/health', (req, res) => res.status(200).json("Health Check Passed"));
@@ -21,13 +26,34 @@ app.use(cors({ credentials: true }));
 app.use(express.json()); // express's built in body-parser - parse JSON bodies, this gives ability to "read" incoming req.body/JSON object
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/products/the-unicorn', (req, res) => {
+  console.log(renderToString(StoreFront))
+  const indexFile = path.resolve(__dirname, '../dist/index.html');
 
-app.get('/products/the-unicorn', (req, res) => {
-  res.send('products/unicorn');
-  return;
-});
+  fs.readFile(indexFile, 'utf8', (err, data) => {
+    return data.replace('<div id="root"></div>', `<div id="root">${ProductPageContainer}</div>`)
+  })
+  res.sendFile(indexFile);
+})
+// app.get('/products/the-unicorn', (req, res) => {
+//   console.log(productUnicorn)
 
-// app.use('/', express.static(path.join(__dirname, '../dist')));
+//   const indexFile = path.resolve(__dirname, '../dist/index.html');
+//   console.log('index:', indexFile)
+
+//   fs.readFile(indexFile, 'utf8', (err, data) => {
+//     if (err) {
+//       console.log('products/unicorn', err);
+//       return res.status(500).send('Error');
+//     }
+//     return res.send(
+//       data.replace('<div id="root"></div>', `<div id="root">${productUnicorn}</div>`)
+//     );
+//   })
+//   res.sendFile(indexFile);
+//   return;
+// });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,6 +71,8 @@ app.use(function(err, req, res, next) {
   console.error(err);
   res.status(err.status || 500).send(res.locals.message);
 });
+
+app.use('/', express.static(path.join(__dirname, '../dist')));
 
 
 app.listen(PORT, (err) => {

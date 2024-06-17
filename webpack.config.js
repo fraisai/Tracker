@@ -1,10 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 
 module.exports = {
     entry: [ './src/client/index.js'], // entry point into app
+    // externals: [nodeExternals()],
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
