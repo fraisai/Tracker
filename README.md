@@ -13,5 +13,6 @@
     - Finally changes to application are deployed to Kubernetes cluster by applying the Service and Deployment Manifests
 - To delete Kubernetes cluster: `npm run delete-cluster`
 
-## System Architecture (Microservices with 2 replicas each are deployed to a Kubernetes cluster using AWS Elastic Kubernetes Service)
+## System Architecture 
+Microservices with 2 replicas each are deployed to a Kubernetes cluster using AWS Elastic Kubernetes Service
 ![kubernetes architecture](src/client/assets/new-tracker-system-architecture.png)
