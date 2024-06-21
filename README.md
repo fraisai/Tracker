@@ -1,9 +1,9 @@
-Tech stack:
+# Tech stack:
 - Fullstack: JavaScript, React, Node.js (Express), SQL (PostgreSQL)
 - Devops: Amazon EKS (Kubernetes), Amazon ECR, Docker, Github Actions (CI/CD)
 
 
-
+# Instructions
 - Use `npm run create-cluster` to create EKS cluster (`eksctl create cluster --name <cluster-name> --region <region_mame> --fargate`)
 - Make changes to your code 
 - When code is committed to the main branch:
@@ -13,4 +13,5 @@ Tech stack:
     - Finally changes to application are deployed to Kubernetes cluster by applying the Service and Deployment Manifests
 - To delete Kubernetes cluster: `npm run delete-cluster`
 
+# System Architecture (Microservices with 2 replicas each are deployed to a Kubernetes cluster using AWS Elastic Kubernetes Service)
 ![kubernetes architecture](src/client/assets/new-tracker-system-architecture.png)
