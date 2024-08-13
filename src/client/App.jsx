@@ -1,21 +1,22 @@
 import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
-import Header from './imports.js';
-import { StoreFront } from './imports.js';
+import Header from "./components/Header.jsx";
+import StoreFront from "./containers/StoreFront.jsx";
 // http://localhost:8000/check = check server
 
 const App = () => {
   return (
     <div>
       <Header />
-
-      {/* <Input /> */}
-      {/* <Routes>
-        <Route path='/' element={MainContainer}></Route>
-      </Routes> */}
       <StoreFront />
     </div>
   )
 }
 
-export default App
+export default App;
+
+
+//       {/* <Input /> */}
+      // {/* <Routes>
+      //   <Route path='/' element={MainContainer}></Route>
+      // </Routes> */}

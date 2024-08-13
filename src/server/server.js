@@ -3,11 +3,11 @@ const fs = require('fs');
 const path = require('path');
 // const ReactDOMServer = require('react-dom/server');
 const React = require('react')
-import App from "../src/client/App.jsx";
+import App from "../client/App.jsx";
 
 const { renderToString } = require('react-dom/server');
-const StoreFront = require('../src/client/containers/StoreFront.cjs').default;
-const ProductPageContainer = require('../src/client/containers/ProductPageContainer.cjs').default;
+const StoreFront = require('../client/containers/StoreFront.cjs').default;
+const ProductPageContainer = require('../client/containers/ProductPageContainer.cjs').default;
 
 const logger = require('morgan');
 const app = express();
@@ -15,7 +15,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 8001;
 
 // HEALTH CHECK
-app.get('/health', (req, res) => res.status(200).json("Health Check Passed"));
+app.get('/health', (req, res) => res.status(200).json("Health Check"));
 app.get('/check', (req, res) => res.status(200).json("Yay! It's working"));
 
 // LOGGER
@@ -26,6 +26,16 @@ app.use(cors({ credentials: true }));
 app.use(express.json()); // express's built in body-parser - parse JSON bodies, this gives ability to "read" incoming req.body/JSON object
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/cart', (req, res) => {
+  res.status(200).json('CARTS');
+})
+
+
+// app.get('cart', (req, res) => {
+//   return res.send(ReactDOMServer.renderToStaticMarkup(React.createElement('h1', null, "server-side check for cart page")));
+// })
+  
+  
 app.use('/products/the-unicorn', (req, res) => {
   console.log(renderToString(StoreFront))
   const indexFile = path.resolve(__dirname, '../dist/index.html');
@@ -35,25 +45,6 @@ app.use('/products/the-unicorn', (req, res) => {
   })
   res.sendFile(indexFile);
 })
-// app.get('/products/the-unicorn', (req, res) => {
-//   console.log(productUnicorn)
-
-//   const indexFile = path.resolve(__dirname, '../dist/index.html');
-//   console.log('index:', indexFile)
-
-//   fs.readFile(indexFile, 'utf8', (err, data) => {
-//     if (err) {
-//       console.log('products/unicorn', err);
-//       return res.status(500).send('Error');
-//     }
-//     return res.send(
-//       data.replace('<div id="root"></div>', `<div id="root">${productUnicorn}</div>`)
-//     );
-//   })
-//   res.sendFile(indexFile);
-//   return;
-// });
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

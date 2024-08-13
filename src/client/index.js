@@ -8,21 +8,21 @@ import App from './App.jsx';
 
 const root = createRoot(document.getElementById('root'));
 
-// root.render(
-// 	// disabled strict mode for authentication/github oauth2
-// 	// <React.StrictMode> 
-// 		<BrowserRouter>
-// 			<App />
-// 		</BrowserRouter>
-// 	// </React.StrictMode>,
-// );
-// hydrateRoot(document.getElementById('root'), <App />);
+root.render(
+	// disabled strict mode for authentication/github oauth2
+	// <React.StrictMode> 
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	// </React.StrictMode>,
+);
+createRoot(document.getElementById('root'), <App />);
 
 
-hydrateRoot(
-	rootElement,
-	<StrictMode>
-	  <App />
-	</StrictMode>
-  );
+// hydrateRoot(
+// 	rootElement,
+// 	<StrictMode>
+// 	  <App />
+// 	</StrictMode>
+//   );
   

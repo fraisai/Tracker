@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
-    "start": "node ./server/server.js",
-    "dev": "NODE_ENV=development nodemon -r esm ./server/server.js & webpack-dev-server --open --hot",
+    "start": "node ./src/server/server.js",
+    "dev": "NODE_ENV=development nodemon -r esm ./src/server/server.js & webpack-dev-server --open --hot",
     "docker-dev:hot": "docker-compose -f docker-compose-dev-hot.yml up",
     "create-cluster": "bash ./src/eks-shell/create-cluster.sh",
     "delete-cluster": "bash ./src/eks-shell/delete-cluster.sh",
