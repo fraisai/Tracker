@@ -1,4 +1,4 @@
-const { roles } = require('../../common/roles');
+const { roles } = require('../../controllers/common/roles');
 
 const loginPayloadSchema = {
     type: 'object',
