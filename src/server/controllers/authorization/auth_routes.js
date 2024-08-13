@@ -7,8 +7,8 @@ const { register, login } = require('./auth_controller.js');
 const { verify } = require('../schema_validation.js');
 
 // JSON SCHEMA FOR PAYLOAD VERIFICATION
-const registerPayloadSchema = require("./model/registerPayload");
-const loginPayloadSchema = require("./model/loginPayload");
+const registerPayloadSchema = require("./model/registerPayload.js");
+const loginPayloadSchema = require("./model/loginPayload.js");
 
 
 

@@ -1,17 +1,22 @@
 const express = require('express');
+const app = express();
+const cors = require('cors');
+const logger = require('morgan');
 const fs = require('fs');
 const path = require('path');
-// const ReactDOMServer = require('react-dom/server');
-const React = require('react')
-import App from "../client/App.jsx";
 
+// ROUTES
+const { authRoutes } = require('./controllers/authorization/auth_routes');
+const { cartsRoutes } = require('./controllers/carts/carts_routes');
+
+
+// const ReactDOMServer = require('react-dom/server');
+// const React = require('react')
+// import App from "../client/App.jsx";
 const { renderToString } = require('react-dom/server');
 const StoreFront = require('../client/containers/StoreFront.cjs').default;
 const ProductPageContainer = require('../client/containers/ProductPageContainer.cjs').default;
 
-const logger = require('morgan');
-const app = express();
-const cors = require('cors');
 const PORT = process.env.PORT || 8001;
 
 // HEALTH CHECK
