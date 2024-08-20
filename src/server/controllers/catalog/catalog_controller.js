@@ -8,12 +8,12 @@ catalogController.getAllProducts = async (req, res) => { // GET catalog/all
         const products = await catalogModel.findAllProducts(filters);
         return res.status(200).json({
             status: true,
-            catalog: products
+            data: products
         })
     } catch (error) {
         return res.status(500).json({
             status: false,
-            error: error,
+            message: error,
         })
     }
 }

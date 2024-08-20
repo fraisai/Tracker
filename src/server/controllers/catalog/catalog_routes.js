@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const catalogController = require('./catalog_controller');
 
-router.get('catalog/all');
-router.get('catalog');
+// GET catalog/all => catalogController.getAllProducts
+
+router.get('/catalog/all', catalogController.getAllProducts);
+router.get('/catalog');
 
 module.exports = router;
