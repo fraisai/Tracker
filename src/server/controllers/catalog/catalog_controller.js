@@ -17,4 +17,21 @@ catalogController.getAllProducts = async (req, res) => { // GET catalog/all
         })
     }
 }
+
+
+catalogController.getSpecificProduct = async (req, res, next) => { // GET /catalog/:catalog_id
+    const catalog_id = req.params;
+    try {
+        const product = await catalogModel.findProduct(catalog_id);
+        return res.status(200).json({
+            status: true,
+            data: product
+        })
+    } catch (error) {
+        return res.status(404).json({
+            status: false,
+            message: error
+        })
+    }
+}
 module.exports = catalogController;
