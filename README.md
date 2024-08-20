@@ -14,5 +14,5 @@
 - To delete Kubernetes cluster: `npm run delete-cluster`
 
 ## System Architecture 
-Microservices with 2 replicas each are deployed to a Kubernetes cluster using AWS Elastic Kubernetes Service
+Microservices deployed to a Kubernetes cluster using AWS Elastic Kubernetes Service
 ![kubernetes architecture](src/client/assets/new-tracker-system-architecture.png)
