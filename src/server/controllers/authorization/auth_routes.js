@@ -12,7 +12,7 @@ const loginPayloadSchema = require("../../models/auth_schemas/auth_login_payload
 
 
 
-// 1. POST /signup: register new user
+// 1. POST /signup = register new user
 // 2. POST /login: log in
 router.post('/register', verify(registerPayloadSchema), register);
 router.post('/login', verify(loginPayloadSchema), login);

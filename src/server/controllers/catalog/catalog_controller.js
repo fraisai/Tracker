@@ -2,7 +2,7 @@ const catalogModel = require('../../models/catalog_schema');
 
 const catalogController = {};
 
-catalogController.getAllProducts = async (req, res) => {
+catalogController.getAllProducts = async (req, res) => { // GET catalog/all
     const filters = req.query;
     try {
         const products = await catalogModel.findAllProducts(filters);
