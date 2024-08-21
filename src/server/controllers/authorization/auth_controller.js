@@ -13,3 +13,5 @@ authController.register = async (req, res, next) => {
         return;
     }
 }
+
+module.exports = authController;

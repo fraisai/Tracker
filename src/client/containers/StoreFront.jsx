@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 const style2 = `position: 'absolute', top: 0, left:0,bottom:0,right:0, boxSizing: border-box, padding:0, border:'none', margin:'auto', display:'block', width:0, height:0, minWidth:'100%', maxWidth:'100%', minHeight:'100%', maxHeight:'100%'`;
 const style1 = `display: 'block',  overflow:'hidden', position:'absolute', top:0, left:0, bottom:0, right:0, boxSizing: 'border-box', margin: 0`;
 
 
 const StoreFront = () => {
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        const getAllProducts = async () => {
+            try {
+                const res = await axios.get('/api/catalog/all');
+                setProducts(res.data);    
+            } catch (error) {
+                console.log('error in StoreFront.jsx', error);
+                setProducts([])
+            }
+        }
+        getAllProducts();
+    }, [])
   return (
 
     <div className="flex flex-row grid grid-cols-3 gap-32 sm:grid-cols-2 lg:grid-cols-3 ">
