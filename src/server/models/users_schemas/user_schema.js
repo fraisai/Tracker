@@ -51,6 +51,16 @@ module.exports = {
         return this.model.create(user)
     },
 
+    // findAllUsers: (query) => {
+    //     return this.model.findAll({
+    //         where: query
+    //     })
+    // },
+
+    findAllUsers: () => {
+        return this.model.findAll()
+    },
+
     findUser: (query) => {
         return this.model.findOne({
             where: query
@@ -63,15 +73,19 @@ module.exports = {
         })
     },
 
-    findAllUsers: (query) => {
-        return this.model.findAll({
-            where: query
-        })
-    },
-
     deleteUser: (query) => {
         return this.model.destroy({
             where: query
         })
     }
 }
+
+
+/*
+SEQUELIZE Model Queries
+createUser(user)
+findAllUsers()
+findUser(query)
+updateUser(query, updatedValue)
+deleteUser(query)
+*/

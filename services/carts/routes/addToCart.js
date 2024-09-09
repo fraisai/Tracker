@@ -8,7 +8,7 @@ const supabase = supabaseClient.createClient({
   
 // all users are assigned a cart number when they create an account 
 // when user adds item to cart, post request is made to add the item to the right cart_id (for now include a default cart_id associated with user = xxxdefault, default user = userxxx)
-router.post('/carts/:cart_id/', async (req, res, next) => {
+router.post('/carts/:cart_id', async (req, res, next) => {
     const { cart_id } = req.params;
     if (cart_id === null) return res.status(403).json('Sign up for account.');
 
