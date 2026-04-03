@@ -1,0 +1,14 @@
+apiVersion: v2
+kind: Service
+metadata:
+  name: supabase-external # name of service, lets you interact with service using kubectl
+  namespace: trackr-namespace
+spec:
+  type: ExternalName
+  externalName: 
+
+
+# external service = maps to an entity outside of a Kubernetes cluster
+  # NodePort and LoadBalancer can be used to expose INTERNAL services to external consumers while ExternalName makes an alias to an external service (making it addressable as if it were part of your internal network) like a service in another NAMESPACE, a database hosted somehwhere, or service in a different data center
+
+# basically this configuration creates an ExternalName Service named supabase-external which is an alias for an external service at externalName and any pods in the same namespace that try to access supabase-external in the tracker

@@ -1,7 +1,7 @@
-const { roles } = require('../../controllers/common/roles');
-
 const loginPayloadSchema = {
-    type: 'object',
+  type: 'object',
+  properties: {},
+  additionalProperties: true
 };
 
 module.exports = loginPayloadSchema;

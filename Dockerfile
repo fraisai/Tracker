@@ -1,12 +1,17 @@
-FROM node:20.4.0
+FROM node:20-alpine
+
 WORKDIR /usr/src/app
-COPY . /usr/src/app
-COPY package*.json /usr/src/app
 
+COPY package*.json ./
 RUN npm install
-RUN npm run build
-# server runs on port 8000
-EXPOSE 8000
-ENTRYPOINT [ "node", "./server/server.js" ]
 
-# run the server
+COPY . .
+
+RUN npm run build
+
+ENV NODE_ENV=production
+ENV PORT=8001
+
+EXPOSE 8001
+
+CMD ["node", "./src/server/server.js"]

@@ -1,21 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-// CONTROLLERS
-const { register, login } = require('./auth_controller');
+router.post('/register', (req, res) => {
+  res.status(200).json({ message: 'register route working' });
+});
 
-// JSON SCHEMA FOR PAYLOAD VERIFICATION
-const registerPayloadSchema = require("../../models/auth_schemas/auth_register_payload_schema.js");
-const loginPayloadSchema = require("../../models/auth_schemas/auth_login_payload_schema.js");
-
-// MIDDLEWARE - schema validator
-const { verify } = require('../common/schema_validation.js');
-
-
-// 1. POST /signup = register new user
-// 2. POST /login: log in
-router.post('/register', verify(registerPayloadSchema), register);
-router.post('/login', verify(loginPayloadSchema), login);
-
+router.post('/login', (req, res) => {
+  res.status(200).json({ message: 'login route working' });
+});
 
 module.exports = router;

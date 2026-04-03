@@ -1,67 +1,58 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-
 
 module.exports = {
-    entry: [ './src/client/index.js'], // entry point into app
-    // externals: [nodeExternals()],
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
-        filename: 'bundle.js',
-        assetModuleFilename: 'assets/[name][ext]'
+  entry: './src/client/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+    filename: 'bundle.js',
+    clean: true
+  },
+  mode: 'development',
+  devtool: 'eval-source-map',
+  devServer: {
+    host: '0.0.0.0',
+    port: 3001,
+    hot: true,
+    historyApiFallback: true,
+    static: {
+      directory: path.resolve(__dirname, 'dist')
     },
-    devtool: 'eval-source-map',
-    mode: 'development',
-    devServer: {
-        host: '0.0.0.0', // required for docker to work with dev server
-        port: 3001,
-        hot: true, // hmr for dev server
-        historyApiFallback: true,
-        static: {
-            directory: path.resolve(__dirname, 'dist'),
-            publicPath: '/' // match to output prop for publicPath
-        },
-        headers: {
-            'Access-Control=Allow-Origin': '*'
-        },
-        proxy: [
-            { // request to /api/endpoint on frontend will reroute to localhost:8001/endpoint (server port)
-              context: ['/api'],
-              target: 'http://localhost:8001',
-              pathRewrite: { '^/api': '' },
-            },
-          ],
+    headers: {
+      'Access-Control-Allow-Origin': '*'
     },
-
-    module: {
-        rules: [
-          {
-            test: /.(js|jsx)$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-            },        
-          },
-          {
-            test: /.(css|scss)$/,
-            exclude: /node_modules/,
-            use: ['style-loader', 'css-loader'],        
-          },
-          {
-            test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            exclude: /node_modules/,
-            type: 'asset/resource',
-        },
-        ],
-    },
-
-    plugins: [
-        new HtmlWebpackPlugin({
-            favicon: path.resolve(__dirname, './src/client/assets/images/favicon.ico'),
-            template: './index.html'
-        })
+    proxy: [
+      {
+        context: ['/api', '/auth', '/health', '/check'],
+        target: 'http://localhost:8001'
+      }
     ]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      },
+      {
+        test: /\.(css|scss)$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource'
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './index.html'
+    })
+  ]
 };

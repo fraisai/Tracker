@@ -1,6 +1,7 @@
-const { roles } = require('../../common/roles');
-
-const registerPayloadSchema = {};
-
+const registerPayloadSchema = {
+  type: 'object',
+  properties: {},
+  additionalProperties: true
+};
 
 module.exports = registerPayloadSchema;

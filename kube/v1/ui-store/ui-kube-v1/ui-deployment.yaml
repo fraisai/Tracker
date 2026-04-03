@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: eks-ui-deployment
+  namespace: ui-namespace
+  labels:
+    tier: frontend
+spec:
+  replicas: 2 # number of pods
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: eks-catalog-store
+      tier: frontend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: eks-catalog-store
+        tier: frontend
+        track: stable
+    spec:
+      container:
+        - name: ui-store
+          image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/ui-store
+          ports:
+            - name: http
+              containerPort: 3000

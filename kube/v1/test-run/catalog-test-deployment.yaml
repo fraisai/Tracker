@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: hello
+      tier: backend
+      track: stable
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: hello
+          image: "gcr.io/google-samples/hello-go-gke:1.0"
+          ports:
+            - name: http
+              containerPort: 80
+
+
+
+# COMMANDS: https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
+# CATALOG
+  # kubectl apply -f https:// /kube/test-run/catalog-test-service.yaml
+  # kubectl describe deployment backend
+  # kubectl apply -f https://k8s.io/examples/service/access/backend-service.yaml
+# UI
+  # kubectl apply -f https://k8s.io/examples/service/access/frontend-deployment.yaml
+  # kubectl apply -f https://k8s.io/examples/service/access/frontend-service.yaml
+
+# FIND EXTERNAL IP OF FRONTEND
+  # kubectl get service frontend --watch
+
+# SEND TRAFFIC TO BACKEND
+  # curl http://${EXTERNAL_IP} # replace this with the EXTERNAL-IP you saw earlier

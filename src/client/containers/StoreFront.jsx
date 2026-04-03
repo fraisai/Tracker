@@ -1,65 +1,177 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-const style2 = `position: 'absolute', top: 0, left:0,bottom:0,right:0, boxSizing: border-box, padding:0, border:'none', margin:'auto', display:'block', width:0, height:0, minWidth:'100%', maxWidth:'100%', minHeight:'100%', maxHeight:'100%'`;
-const style1 = `display: 'block',  overflow:'hidden', position:'absolute', top:0, left:0, bottom:0, right:0, boxSizing: 'border-box', margin: 0`;
+import React from 'react';
 
+const products = [
+  {
+    id: 1,
+    name: 'Resume Review Pro',
+    description: 'Professional feedback to sharpen your resume and improve your callbacks.',
+    price: 19.99,
+    image: '📝',
+    rating: 4.7,
+    reviews: 1284
+  },
+  {
+    id: 2,
+    name: 'Interview Prep Kit',
+    description: 'Mock questions, answer frameworks, and interview confidence boosters.',
+    price: 29.99,
+    image: '💼',
+    rating: 4.8,
+    reviews: 932
+  },
+  {
+    id: 3,
+    name: 'Application Tracker Pro',
+    description: 'Track applications, follow-ups, interviews, and offers in one dashboard.',
+    price: 9.99,
+    image: '📊',
+    rating: 4.6,
+    reviews: 2011
+  },
+  {
+    id: 4,
+    name: 'Cover Letter Pack',
+    description: 'Editable templates for tailored job applications across different roles.',
+    price: 14.99,
+    image: '📄',
+    rating: 4.5,
+    reviews: 744
+  },
+  {
+    id: 5,
+    name: 'Networking Scripts',
+    description: 'Helpful outreach messages for recruiters, hiring managers, and referrals.',
+    price: 12.99,
+    image: '🤝',
+    rating: 4.4,
+    reviews: 560
+  },
+  {
+    id: 6,
+    name: 'Salary Negotiation Guide',
+    description: 'Learn how to negotiate compensation with confidence and clarity.',
+    price: 24.99,
+    image: '💰',
+    rating: 4.9,
+    reviews: 1502
+  }
+];
 
-const StoreFront = () => {
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        const getAllProducts = async () => {
-            try {
-                const res = await axios.get('/api/catalog/all');
-                setProducts(res.data);    
-            } catch (error) {
-                console.log('error in StoreFront.jsx', error);
-                setProducts([])
-            }
-        }
-        getAllProducts();
-    }, [])
+const StoreFront = ({ addToCart }) => {
   return (
-
-    <div className="flex flex-row grid grid-cols-3 gap-32 sm:grid-cols-2 lg:grid-cols-3 ">
-        <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 gap-x-4 gap-y-8">
-            <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="/api/products/the-unicorn">
-                <div className="h-72 border-b-2 border-palette-lighter relative">
-                    {/* <div style={{}}> */}
-                    <div style={{style1}}>
-                        <img alt="test-text" src="https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-6aeffeca.jpg%3Fv%3D1617396810&w=2048&q=75" decoding="async" className="transform duration-500 ease-in-out hover:scale-110" style={{style2}} sizes="100vw" srcSet="" />
-                    </div>
-                </div>
-                            
-                <div className="h-48 relative">
-                    <div className="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">The Unicorn</div>
-                    <div className="text-lg text-gray-600 p-4 font-primary font-light">They exist!</div>
-                    <div className="text-palette-dark font-primary font-medium text-base absolute bottom-0 right-0 mb-4 pl-8 pr-4 pb-1 pt-2 bg-palette-lighter  rounded-tl-sm triangle">$<span className="text-lg">9.99</span></div>
-                </div>
-            </a>
+    <main style={{ background: '#eaeded', minHeight: 'calc(100vh - 108px)' }}>
+      <section
+        style={{
+          background:
+            'linear-gradient(to bottom, rgb(196, 233, 245), rgb(234, 237, 237))',
+          padding: '36px 24px 120px'
+        }}
+      >
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div
+            style={{
+              background: '#fff',
+              padding: '20px 24px',
+              fontSize: '15px',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.08)'
+            }}
+          >
+            You are on trackr.com. Shop career tools, interview prep, and job search resources.
+          </div>
         </div>
+      </section>
 
+      <section style={{ maxWidth: '1400px', margin: '-80px auto 0', padding: '0 24px 32px' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '20px'
+          }}
+        >
+          {products.map((product) => (
+            <article
+              key={product.id}
+              style={{
+                background: '#fff',
+                border: '1px solid #ddd',
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '420px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: '20px',
+                  lineHeight: 1.3,
+                  margin: '0 0 12px'
+                }}
+              >
+                {product.name}
+              </h2>
 
-        <div className="py-12 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-            <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter" href="http://localhost:3000/products/the-unicorn">
-                <div className="h-72 border-b-2 border-palette-lighter relative">
-                    <div style={{style1}}>
-                        <img alt="test-text" src="https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-6aeffeca.jpg%3Fv%3D1617396810&w=2048&q=75" decoding="async" className="transform duration-500 ease-in-out hover:scale-110" style={{style2}} sizes="100vw" srcSet="" />
-                    </div>
-                </div>
-                            
-                <div className="h-48 relative">
-                    <div className="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">The Unicorn</div>
-                    <div className="text-lg text-gray-600 p-4 font-primary font-light">They exist!</div>
-                    <div className="text-palette-dark font-primary font-medium text-base absolute bottom-0 right-0 mb-4 pl-8 pr-4 pb-1 pt-2 bg-palette-lighter  rounded-tl-sm triangle">$<span className="text-lg">9.99</span></div>
-                </div>
-                        
-            </a>    
+              <div
+                style={{
+                  height: '180px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: '#f7f7f7',
+                  fontSize: '72px',
+                  borderRadius: '6px',
+                  marginBottom: '14px'
+                }}
+              >
+                {product.image}
+              </div>
 
+              <div style={{ color: '#007185', fontSize: '14px', marginBottom: '8px' }}>
+                {'★'.repeat(4)}☆ <span style={{ marginLeft: '6px' }}>{product.rating}</span>{' '}
+                <span style={{ marginLeft: '6px' }}>({product.reviews.toLocaleString()})</span>
+              </div>
+
+              <p
+                style={{
+                  color: '#0f1111',
+                  fontSize: '14px',
+                  lineHeight: 1.5,
+                  flexGrow: 1,
+                  margin: '0 0 14px'
+                }}
+              >
+                {product.description}
+              </p>
+
+              <div style={{ marginBottom: '8px' }}>
+                <span style={{ fontSize: '28px' }}>${product.price.toFixed(2)}</span>
+              </div>
+
+              <div style={{ color: '#067d62', fontSize: '14px', marginBottom: '12px' }}>
+                In Stock
+              </div>
+
+              <button
+                type="button"
+                onClick={() => addToCart(product)}
+                style={{
+                  background: '#ffd814',
+                  border: '1px solid #fcd200',
+                  borderRadius: '20px',
+                  padding: '10px 16px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                Add to Cart
+              </button>
+            </article>
+          ))}
         </div>
+      </section>
+    </main>
+  );
+};
 
-        
-    </div>
-  )
-}
-
-export default StoreFront
+export default StoreFront;

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: carts
+  labels: # service labels: app=tracker, component=carts, type=deploy, tier=backend
+    app: tracker
+    component: carts
+    type: service
+    tier: backend
+spec:
+  type: ClusterIP # assigns internal IP addresses for intra-cluster communication vs NodePort = exposes apps to external clients via specfic ports on worker nodes
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector: # forwards requests to pods with the labels: microservice=carts, type=pods, tier=backend
+    microservice: carts
+    type: pods
+    tier: backend

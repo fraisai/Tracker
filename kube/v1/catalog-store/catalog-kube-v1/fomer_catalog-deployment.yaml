@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: eks-catalog-deployment
+  namespace: catalog-namespace
+  labels:
+    app: eks-catalog-store
+    tier: backend
+    track: stable
+
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: eks-catalog-store
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: eks-catalog-store
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: eks-catalog-store
+          image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/catalog-store
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20

@@ -4,6 +4,10 @@
 
 
 # Instructions
+- To run locally
+`npm install`
+`npm run build`
+`node ./src/server/server.js`
 - Use `npm run create-cluster` to create EKS cluster (`eksctl create cluster --name <cluster-name> --region <region_mame> --fargate`)
 - Make changes to your code 
 - When code is committed to the main branch:
@@ -12,6 +16,7 @@
     - Kubeconfig file is updated (organize information about clusters, users, namespaces, and authentication mechanisms)
     - Finally changes to application are deployed to Kubernetes cluster by applying the Service and Deployment Manifests
 - To delete Kubernetes cluster: `npm run delete-cluster`
+
 
 ## System Architecture 
 Microservices deployed to a Kubernetes cluster using AWS Elastic Kubernetes Service

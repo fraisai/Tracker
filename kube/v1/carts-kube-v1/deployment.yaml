@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: carts
+  labels: # deployment label: app=tracker, component=carts, type=deploy, tier=backend
+    app: tracker
+    component: carts
+    type: deploy
+    tier: backend
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector: # tells deployment which pods to select
+    matchLabels: 
+      microservice: carts
+      type: pods
+      tier: backend
+  template:
+    metadata:
+      labels: # pods labels: microservice=carts, type=pods, tier=backend
+        microservice: carts
+        type: pods
+        tier: backend
+    spec:
+      serviceAccountName: carts
+      containers:
+        - name: carts
+          image: 403188442647.dkr.ecr.us-east-2.amazonaws.com/carts-store
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8001
+              protocol: TCP
+      #     resources:
+      #       limits:
+      #         memory: 512Mi
+      #       requests:
+      #         cpu: 128m
+      #         memory: 512Mi
+      #     volumeMounts:
+      #       - mountPath: /tmp
+      #         name: tmp-volume
+      # volumes:
+      #   - name: tmp-volume
+      #     emptyDir:
+      #       medium: Memory
+
+
+# What is done by this deployment file:
+#   1. use the container image at the ecr link and run 2 replica Pods
+#   2. expose the container on port 8001 named http
+#   3. apply labels to the Pods so that other resources (like the service) can refer to these Pods
